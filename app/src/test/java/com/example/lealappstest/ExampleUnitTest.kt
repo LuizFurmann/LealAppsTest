@@ -1,4 +1,4 @@
-package com.example.lealapps
+package com.example.lealappstest
 
 import org.junit.Test
 

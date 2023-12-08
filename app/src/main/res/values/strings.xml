@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">LealApps</string>
+    <string name="app_name">LealAppsTest</string>
+
+    <string name="yes">Sim</string>
+    <string name="no">Não</string>
+    <string name="understand">Entendi</string>
+    <string name="cancel">Cancelar</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
 </resources>
