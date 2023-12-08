@@ -32,8 +32,8 @@ class ExerciseAdapter() : RecyclerView.Adapter<ExerciseAdapter.ExerciseViewHolde
 
 
         holder.itemView.setOnClickListener {
-            Intent(holder.itemView.context, ExerciseActivity::class.java).also{
-                it.putExtra("Training", currentItem)
+            Intent(holder.itemView.context, ExerciseDetailsActivity::class.java).also{
+                it.putExtra("Exercise", currentItem)
                 holder.itemView.context.startActivity(it)
             }
         }

@@ -24,17 +24,17 @@ class ExerciseViewModel(application: Application): AndroidViewModel(application)
 
     fun readAllData(): LiveData<List<Exercise>> = exerciseRepository.readAllData()
 
-    fun addTraining(exercise: Exercise) {
+    fun addExercise(exercise: Exercise) {
         viewModelScope.launch(Dispatchers.IO) {
             exerciseRepository.addExercise(exercise)
         }
     }
-    fun updateTraining(exercise: Exercise) {
+    fun updateExercise(exercise: Exercise) {
         viewModelScope.launch(Dispatchers.IO) {
             exerciseRepository.updateExercise(exercise)
         }
     }
-    fun deleteTraining(exercise: Exercise) {
+    fun deleteExercise(exercise: Exercise) {
         viewModelScope.launch(Dispatchers.IO) {
             exerciseRepository.deleteExercise(exercise)
         }

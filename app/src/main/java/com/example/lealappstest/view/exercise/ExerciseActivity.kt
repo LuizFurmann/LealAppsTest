@@ -47,6 +47,7 @@ class ExerciseActivity : AppCompatActivity() {
 
     private fun setupViewModel(){
         exerciseViewModel = ViewModelProvider(this)[ExerciseViewModel::class.java]
+        trainingViewModel = ViewModelProvider(this)[TrainingViewModel::class.java]
         exerciseViewModel.readAllData().observe(this) {
                 exercises -> updateList(exercises)
         }
@@ -67,8 +68,7 @@ class ExerciseActivity : AppCompatActivity() {
 
     private fun newExercise() {
         binding.fabNewExercise.setOnClickListener {
-
-            Intent(this@ExerciseActivity, TrainingDetailsActivity::class.java).also{
+            Intent(this@ExerciseActivity, ExerciseDetailsActivity::class.java).also{
                 startActivity(it)
             }
         }

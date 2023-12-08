@@ -13,6 +13,9 @@
         android:theme="@style/Theme.LealAppsTest"
         tools:targetApi="31">
         <activity
+            android:name=".view.exercise.ExerciseDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.exercise.ExerciseActivity"
             android:exported="false" />
         <activity
