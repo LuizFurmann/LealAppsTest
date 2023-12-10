@@ -1,6 +1,7 @@
 package com.example.lealappstest.view.exercise
 
 import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -30,6 +31,9 @@ class ExerciseAdapter() : RecyclerView.Adapter<ExerciseAdapter.ExerciseViewHolde
         val currentItem = exerciseList[position]
         holder.exercise.text = currentItem.name
 
+        var myUri : Uri = Uri.parse(currentItem.image);
+        holder.imgExercise.setImageURI(myUri)
+
 
         holder.itemView.setOnClickListener {
             Intent(holder.itemView.context, ExerciseDetailsActivity::class.java).also{
@@ -45,5 +49,6 @@ class ExerciseAdapter() : RecyclerView.Adapter<ExerciseAdapter.ExerciseViewHolde
 
     class ExerciseViewHolder(private val itemBinding: RowExerciseBinding) : RecyclerView.ViewHolder(itemBinding.root){
         var exercise = itemBinding.tvExerciseNumber
+        var imgExercise = itemBinding.imgExercise
     }
 }

@@ -53,7 +53,7 @@ class ExerciseDetailsActivity : AppCompatActivity() {
     fun imageChooser() {
         val i = Intent()
         i.type = "image/*"
-        i.action = Intent.ACTION_GET_CONTENT
+        i.action = Intent.ACTION_OPEN_DOCUMENT
 
         startActivityForResult(Intent.createChooser(i, "Select Picture"), REQUEST_IMAGE)
     }
