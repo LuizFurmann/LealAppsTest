@@ -10,26 +10,21 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.LealApps"
+        android:theme="@style/Theme.LealAppsTest"
         tools:targetApi="31">
         <activity
-            android:name=".ui.exercise.ExerciseDetailsActivity"
+
+            android:name=".view.exercise.ExerciseDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.exercise.ExerciseActivity"
+            android:name=".view.exercise.ExerciseActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.member.ExerciseMemberActivity"
+            android:name=".view.training.TrainingDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.gym.TrainingDetailsActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.SplashActivity"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:name=".view.training.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

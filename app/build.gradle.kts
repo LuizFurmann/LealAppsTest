@@ -5,11 +5,12 @@ plugins {
 }
 
 android {
-    namespace = "com.example.lealapps"
+
+    namespace = "com.example.lealappstest"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.lealapps"
+        applicationId = "com.example.lealappstest"
         minSdk = 24
         targetSdk = 33
         versionCode = 1

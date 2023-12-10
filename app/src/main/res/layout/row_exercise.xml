@@ -22,7 +22,8 @@
             android:src="@mipmap/ic_launcher" />
 
         <TextView
-            android:id="@+id/tvExercise"
+
+            android:id="@+id/tvExerciseNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/app_name"

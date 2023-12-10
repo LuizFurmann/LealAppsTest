@@ -4,154 +4,89 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E9F4EA">
+    tools:context=".view.training.TrainingDetailsActivity">
 
-        <androidx.cardview.widget.CardView
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:layout_margin="20dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="5dp"
+        tools:ignore="MissingConstraints"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:background="@android:color/white"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="5dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <LinearLayout
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/tilAction"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Detalhes do exercício"
-                        android:textColor="@color/black"
-                        android:textSize="20sp"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"/>
-
-                    <ImageView
-                        android:id="@+id/imgLeft"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@drawable/training"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"/>
-
-                    <ImageView
-                        android:id="@+id/imgRight"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@drawable/trainingleft"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilMembro"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_marginTop="5dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:maxLines="1"
+                    android:lines="1"
+                    android:singleLine="true"
+                    android:hint="Número"
+                    android:textColorHint="@color/black"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/etMember"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:maxLines="1"
-                        android:lines="1"
-                        android:singleLine="true"
-                        android:focusable="false"
-                        android:enabled="false"
-                        android:hint="Membro"
-                        android:textColorHint="@color/black" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilExercise"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp">
+                    android:maxLines="1"
+                    android:lines="1"
+                    android:singleLine="true"
+                    android:hint="Descrição"
+                    android:textColorHint="@color/black"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/etExercise"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:focusable="false"
-                        android:enabled="false"
-                        android:hint="Exercício"
-                        android:textColorHint="@color/black" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilSeries"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp">
+                    android:maxLines="1"
+                    android:lines="1"
+                    android:singleLine="true"
+                    android:hint="Data"
+                    android:textColorHint="@color/black"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/etSeries"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:maxLines="1"
-                        android:lines="1"
-                        android:singleLine="true"
-                        android:hint="Séries"
-                        android:enabled="false"
-                        android:inputType="number"
-                        android:textColorHint="@color/black" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilRepetition"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp">
-
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/etRepetition"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:maxLines="1"
-                        android:lines="1"
-                        android:singleLine="true"
-                        android:hint="Repetições"
-                        android:enabled="false"
-                        android:inputType="number"
-                        android:textColorHint="@color/black" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <Button
-                    android:id="@+id/btnSalvaTreino"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="15dp"
-                    android:textAllCaps="false"
-                    android:textSize="18sp"
-                    android:background="@drawable/button_shape"
-                    android:text="Salvar"
-                    android:textColor="@color/white"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+            <Button
+                android:id="@+id/btnSaveTraining"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:background="@drawable/button_shape"
+                android:text="Salvar"
+                android:textStyle="bold"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,11 +1,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.LealApps" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+
+    <style name="Base.Theme.LealAppsTest" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Customize your light theme here. -->
          <item name="colorPrimary">@color/green</item>
     </style>
 
-    <style name="Base.Theme.LealApps.NoActionBar">
+
+    <style name="Base.Theme.LealAppsTest.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
 
@@ -17,12 +19,12 @@
         <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
-    <style name="Theme.GymMobi.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="Theme.GymMobi.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Theme.LealAppsTest" parent="Base.Theme.LealAppsTest" />
 
+    <style name="Base.Theme.LealAppsTest.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="Theme.LealApps" parent="Base.Theme.LealApps" />
+    <style name="Base.Theme.LealAppsTest.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="MaterialAlertDialog_rounded" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">
         <item name="shapeAppearanceOverlay">@style/DialogCorners</item>

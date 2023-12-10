@@ -1,8 +1,7 @@
 <resources>
-    <string name="app_name">LealApps</string>
 
-    <string name="member_missing_alert">Selecione um membro!</string>
-    <string name="fild_missing_alert">Preencha todos os campos!</string>
+    <string name="app_name">LealAppsTest</string>
+
     <string name="yes">Sim</string>
     <string name="no">Não</string>
     <string name="understand">Entendi</string>

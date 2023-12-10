@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.exercise.ExerciseDetailsActivity"
-    android:background="#E9F4EA">
+
+    tools:context=".view.exercise.ExerciseDetailsActivity">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
