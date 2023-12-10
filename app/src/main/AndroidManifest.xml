@@ -6,12 +6,11 @@
         android:name="android.hardware.telephony"
         android:required="false" />
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission
         android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
         android:minSdkVersion="29" />
-
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
@@ -25,6 +24,25 @@
         android:theme="@style/Theme.LealAppsTest"
         tools:targetApi="31">
         <activity
+            android:name=".view.splash.SplashActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".view.authentication.RegisterActivity"
+            android:theme="@style/AppTheme"
+            android:exported="false" />
+        <activity
+            android:name=".view.authentication.LoginActivity"
+            android:exported="true"
+            android:theme="@style/AppTheme" />
+        <activity
             android:name=".view.exercise.ExerciseDetailsActivity"
             android:exported="false" />
         <activity
@@ -36,11 +54,7 @@
         <activity
             android:name=".view.training.MainActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
+
 </manifest>
