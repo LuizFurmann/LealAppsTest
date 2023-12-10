@@ -31,8 +31,7 @@ class ExerciseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        training = intent.getSerializableExtra("Training") as Training
-
+        updateTrainingDetails()
         setTitle("Treino ${training.name.toString()}")
         setupRecyclerView()
         setupViewModel()
@@ -54,12 +53,22 @@ class ExerciseActivity : AppCompatActivity() {
         }
     }
 
+    fun updateTrainingDetails(){
+        training = intent.getSerializableExtra("Training") as Training
+
+        binding.trainingNumberValue.text = training.name
+        binding.trainingDateValue.text = training.date
+        binding.trainingObservationValue.text = training.description
+    }
+
     private fun updateList(exercises: List<Exercise>){
         if (exercises.isEmpty()) {
             binding.rvExercise.visibility = View.GONE
+            binding.myExercisesTittle.visibility = View.GONE
             binding.emptyExerciseList.visibility = View.VISIBLE
         } else {
             binding.rvExercise.visibility = View.VISIBLE
+            binding.myExercisesTittle.visibility = View.VISIBLE
             binding.emptyExerciseList.visibility = View.GONE
             exerciseAdapter.updateList(exercises)
         }
