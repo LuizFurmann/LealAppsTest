@@ -9,14 +9,18 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.lealappstest.R
 import com.example.lealappstest.databinding.ActivityTrainingDetailsBinding
+import com.example.lealappstest.model.Exercise
 import com.example.lealappstest.model.Training
+import com.example.lealappstest.view.exercise.ExerciseViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.sql.Timestamp
 import java.util.Calendar
 
 class TrainingDetailsActivity : AppCompatActivity() {
-    private lateinit var binding : ActivityTrainingDetailsBinding
+    private lateinit var binding: ActivityTrainingDetailsBinding
 
     lateinit var trainingViewModel: TrainingViewModel
+    lateinit var exerciseViewModel: ExerciseViewModel
 
     lateinit var training: Training
 
@@ -31,20 +35,21 @@ class TrainingDetailsActivity : AppCompatActivity() {
     }
 
 
-    fun setupViewModel(){
+    fun setupViewModel() {
         trainingViewModel = ViewModelProvider(this)[TrainingViewModel::class.java]
+        exerciseViewModel = ViewModelProvider(this)[ExerciseViewModel::class.java]
 
-        if(intent.getSerializableExtra("Training") != null){
+        if (intent.getSerializableExtra("Training") != null) {
             training = intent.getSerializableExtra("Training") as Training
             updateView(training)
-        }else{
+        } else {
             binding.etNumber.isEnabled = true
             binding.etDescription.isEnabled = true
             binding.etDate.isEnabled = true
         }
     }
 
-    private fun updateView(training: Training){
+    private fun updateView(training: Training) {
         binding.etNumber.setText(training.name)
         binding.etDescription.setText(training.date.toString())
         binding.etDate.setText(training.description)
@@ -92,23 +97,16 @@ class TrainingDetailsActivity : AppCompatActivity() {
             }
 
             if (validadeExercise()) {
-                if(intent.getSerializableExtra("Training") != null){
-                    updateExercise()
-                    finish()
-                }else{
-                    insertDataToDatabase()
-                    binding.etNumber.setText("")
-                    binding.etDescription.setText("")
-                    binding.etDate.setText("")
-                }
+                checkTrainingExists()
             }
         }
     }
+
     fun validadeExercise(): Boolean {
-        if(binding.tilNumber.editText?.text.toString().isEmpty()){
+        if (binding.tilNumber.editText?.text.toString().isEmpty()) {
             return false
         }
-        if(binding.tilDescription.editText?.text.toString().isEmpty()){
+        if (binding.tilDescription.editText?.text.toString().isEmpty()) {
             return false
         }
         return true
@@ -117,19 +115,80 @@ class TrainingDetailsActivity : AppCompatActivity() {
     private fun insertDataToDatabase() {
 //        val timestamp = Timestamp.valueOf(binding.etDate.text.toString())
 
-        val training = Training(0, binding.etNumber.text.toString(), binding.etDescription.text.toString(), binding.etDate.text.toString())
+        val training = Training(
+            0,
+            binding.etNumber.text.toString(),
+            binding.etDescription.text.toString(),
+            binding.etDate.text.toString()
+        )
         trainingViewModel.addTraining(training)
         Toast.makeText(this, "Exercício adicionado", Toast.LENGTH_LONG).show()
     }
 
-    private fun updateExercise(){
-        val timestamp = Timestamp.valueOf(binding.etDate.text.toString())
+    private fun updateTraining() {
+//        val timestamp = Timestamp.valueOf(binding.etDate.text.toString())
         training = intent.getSerializableExtra("Training") as Training
+
         var id = training.id
 
-        val updatedExercise = Training(id, binding.etNumber.text.toString(), binding.etDescription.text.toString(), binding.etDate.text.toString())
-        trainingViewModel.updateTraining(updatedExercise)
+        exerciseViewModel.readAllData(training.name.toString().toInt()).observe(this) { exercises ->
+            exercises?.forEach {
+                val updatedExercise = Exercise(
+                    it.id,
+                    binding.etNumber.text.toString().toInt(),
+                    it.name,
+                    it.image,
+                    it.observation
+                )
+                exerciseViewModel.updateExercise(updatedExercise)
+            }
+        }
+
+        val updatedTraining = Training(
+            id,
+            binding.etNumber.text.toString(),
+            binding.etDescription.text.toString(),
+            binding.etDate.text.toString()
+        )
+        trainingViewModel.updateTraining(updatedTraining)
+        finish()
+
         Toast.makeText(this, "Treino editado", Toast.LENGTH_LONG).show()
+    }
+
+    fun checkTrainingExists(){
+        var exists = false
+        trainingViewModel.readAllData().observe(this) { trainings ->
+            if(trainings.isNotEmpty()){
+                trainings.size
+                trainings?.forEach lit@{
+                    if(it.name == binding.etNumber.text.toString()){
+                        exists = true
+                        return@lit
+                    }
+                }
+            }
+
+            if(exists){
+                trainingExists()
+            }else{
+                if (intent.getSerializableExtra("Training") != null) {
+                    updateTraining()
+                    finish()
+                } else {
+                    insertDataToDatabase()
+                    finish()
+                }
+            }
+        }
+    }
+
+    private fun trainingExists() {
+        val builder = MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialog_rounded)
+        builder.setMessage("O treino já existe")
+        builder.setPositiveButton("Entendi") { dialog, which ->
+        }
+        builder.show()
     }
 
     private fun getPickDate() {

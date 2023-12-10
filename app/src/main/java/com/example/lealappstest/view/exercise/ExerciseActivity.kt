@@ -31,16 +31,12 @@ class ExerciseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-
-
         training = intent.getSerializableExtra("Training") as Training
 
         setTitle("Treino ${training.name.toString()}")
         setupRecyclerView()
         setupViewModel()
         newExercise()
-
-
     }
 
     private fun setupRecyclerView(){
@@ -113,12 +109,8 @@ class ExerciseActivity : AppCompatActivity() {
             Intent(this@ExerciseActivity, TrainingDetailsActivity::class.java).also{
                 it.putExtra("Training", training)
                 startActivity(it)
+                finish()
             }
-
-//            binding.etNumber.isEnabled = true
-//            binding.etDate.isEnabled = true
-//            binding.etDescription.isEnabled = true
-//            binding.btnSaveTraining.visibility = View.VISIBLE
             return true
         }else if(item.itemId == R.id.delete){
             deleteExerciseConfirmation()
