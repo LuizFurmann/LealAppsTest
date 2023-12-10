@@ -13,14 +13,34 @@
         android:theme="@style/Theme.LealApps"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:name=".ui.exercise.ExerciseDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.exercise.ExerciseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.member.ExerciseMemberActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.gym.TrainingDetailsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.SplashActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
