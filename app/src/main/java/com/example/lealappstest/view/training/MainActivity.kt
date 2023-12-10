@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         setupRecyclerView()
         setupViewModel()
         newExercise()
-        checkPermissionsAndOpenFilePicker()
+//        checkPermissionsAndOpenFilePicker()
     }
 
     private fun setupRecyclerView(){

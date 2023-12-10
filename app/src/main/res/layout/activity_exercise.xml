@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.exercise.ExerciseActivity">
+    tools:context=".view.exercise.ExerciseActivity"
+    android:background="@drawable/background">
 
     <TextView
         android:id="@+id/myExercisesTittle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/myExercises"
+        android:textColor="@color/white"
         android:textSize="26sp"
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"

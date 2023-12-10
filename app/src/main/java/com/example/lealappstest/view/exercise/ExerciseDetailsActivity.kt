@@ -78,7 +78,8 @@ class ExerciseDetailsActivity : AppCompatActivity() {
                 exercise = intent.getSerializableExtra("Exercise") as Exercise
                 updateView(exercise)
                 setTitle("Exercício ${exercise.name.toString()}")
-                binding.btnSaveExercise.visibility = View.INVISIBLE
+                binding.btnSaveExercise.visibility = View.GONE
+                binding.selectImageTittle.visibility = View.GONE
             } else {
                 binding.etName.isEnabled = true
                 binding.etDescription.isEnabled = true
@@ -201,17 +202,6 @@ class ExerciseDetailsActivity : AppCompatActivity() {
         builder.show()
     }
 
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        if (requestCode == REQUEST_IMAGE && resultCode == Activity.RESULT_OK) {
-//            val imageUri = data?.data
-//            ActivityResultContracts.GetContent()
-//
-//            profilePicturePath = imageUri.toString()
-//            binding.selectedImage.setImageURI(data?.data)
-//        }
-//    }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         if (intent.getSerializableExtra("Exercise") != null) {
             menuInflater.inflate(R.menu.menu_item, menu)
@@ -224,6 +214,7 @@ class ExerciseDetailsActivity : AppCompatActivity() {
             binding.etName.isEnabled = true
             binding.etDescription.isEnabled = true
             binding.btnSaveExercise.visibility = View.VISIBLE
+            binding.selectImageTittle.visibility = View.VISIBLE
             return true
         } else if (item.itemId == R.id.delete) {
             deleteExerciseConfirmation()
