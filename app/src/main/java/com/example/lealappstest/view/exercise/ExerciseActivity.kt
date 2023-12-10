@@ -61,12 +61,10 @@ class ExerciseActivity : AppCompatActivity() {
     private fun updateList(exercises: List<Exercise>){
         if (exercises.isEmpty()) {
             binding.rvExercise.visibility = View.GONE
-//            binding.tvNoListOrder.visibility = View.VISIBLE
-//            binding.imgNoListOrder.visibility = View.VISIBLE
+            binding.emptyExerciseList.visibility = View.VISIBLE
         } else {
             binding.rvExercise.visibility = View.VISIBLE
-//            binding.tvNoListOrder.visibility = View.GONE
-//            binding.imgNoListOrder.visibility = View.GONE
+            binding.emptyExerciseList.visibility = View.GONE
             exerciseAdapter.updateList(exercises)
         }
     }

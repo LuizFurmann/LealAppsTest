@@ -8,5 +8,9 @@
     <string name="open">open</string>
     <string name="close">close</string>
 
-    <string name="select_image">Selecione uma imagem</string>
+    <string name="selectImage">Selecione uma imagem</string>
+    <string name="emptyTrainingList">Nenhum treino encontrado, adicione para ver aqui!</string>
+    <string name="emptyExerciseList">Nenhum exercício encontrado, adicione para ver aqui!</string>
+    <string name="myExercises">Meus exercícios</string>
+    <string name="myTraining">Meus treinos</string>
 </resources>
