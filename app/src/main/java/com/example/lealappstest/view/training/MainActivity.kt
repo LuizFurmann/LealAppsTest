@@ -52,12 +52,10 @@ class MainActivity : AppCompatActivity() {
     private fun updateList(trainings: List<Training>){
         if (trainings.isEmpty()) {
             binding.rvTraining.visibility = View.GONE
-//            binding.tvNoListOrder.visibility = View.VISIBLE
-//            binding.imgNoListOrder.visibility = View.VISIBLE
+            binding.emptyTrainingList.visibility = View.VISIBLE
         } else {
             binding.rvTraining.visibility = View.VISIBLE
-//            binding.tvNoListOrder.visibility = View.GONE
-//            binding.imgNoListOrder.visibility = View.GONE
+            binding.emptyTrainingList.visibility = View.GONE
             trainingAdapter.updateList(trainings)
         }
     }
