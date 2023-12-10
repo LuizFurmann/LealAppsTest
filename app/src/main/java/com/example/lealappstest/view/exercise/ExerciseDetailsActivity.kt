@@ -88,6 +88,7 @@ class ExerciseDetailsActivity : AppCompatActivity() {
 
     private fun updateView(exercise: Exercise) {
          var myUri : Uri = Uri.parse(exercise.image);
+        profilePicturePath = myUri.toString()
 
         binding.etName.setText(exercise.name)
         binding.selectedImage.setImageURI(myUri)
@@ -136,19 +137,15 @@ class ExerciseDetailsActivity : AppCompatActivity() {
             }
 
             if (validadeExercise()) {
-                if (intent.getSerializableExtra("Exercise") != null) {
-                    updateExercise()
-                    finish()
-                } else {
-                    insertDataToDatabase()
-                    binding.etName.setText("")
-                    binding.etDescription.setText("")
-                }
+                checkExerciseExists()
             }
         }
     }
 
     fun validadeExercise(): Boolean {
+        if (profilePicturePath.isNullOrEmpty()) {
+            return false
+        }
         if (binding.tilName.editText?.text.toString().isEmpty()) {
             return false
         }
@@ -168,7 +165,6 @@ class ExerciseDetailsActivity : AppCompatActivity() {
             exerciseViewModel.addExercise(exercise)
             Toast.makeText(this, "Exercício adicionado", Toast.LENGTH_LONG).show()
         }
-
     }
 
     private fun updateExercise(){
@@ -198,6 +194,77 @@ class ExerciseDetailsActivity : AppCompatActivity() {
             deleteExercise()
         }
         builder.setNegativeButton(getString(R.string.no)) { dialog, which ->
+        }
+        builder.show()
+    }
+
+    fun checkExerciseExists(){
+        var exists = false
+        if (intent.getSerializableExtra("Training") != null) {
+            training = intent.getSerializableExtra("Training") as Training
+            exerciseViewModel.readAllData(training.name.toString().toInt()).observe(this) { trainings ->
+                if(trainings.isNotEmpty()){
+                    trainings.size
+                    trainings?.forEach lit@{
+                        if(it.name == binding.etName.text.toString()){
+                            exists = true
+                            return@lit
+                        }
+                    }
+                }
+
+                if(exists){
+                    exerciseExists()
+                }else{
+                    if (intent.getSerializableExtra("Exercise") != null) {
+                        updateExercise()
+                        finish()
+                    } else {
+                        insertDataToDatabase()
+                        finish()
+                    }
+                }
+            }
+        }else{
+            exerciseViewModel.readAllData(exercise.training).observe(this) { exercises ->
+                if(exercises.isNotEmpty()){
+                    exercises.size
+                    exercises?.forEach lit@{
+                        if(it.name == binding.etName.text.toString()){
+                            exists = true
+                            return@lit
+                        }
+                    }
+                }
+
+                if(exists){
+                    exerciseExists()
+                }else{
+                    if (intent.getSerializableExtra("Exercise") != null) {
+                        updateExercise()
+                        finish()
+                    } else {
+                        insertDataToDatabase()
+                        finish()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun exerciseExists() {
+        val builder = MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialog_rounded)
+        builder.setMessage("O exercício já existe, deseja criar mesmo assim?")
+        builder.setPositiveButton("Sim") { dialog, which ->
+            if (intent.getSerializableExtra("Exercise") != null) {
+                updateExercise()
+                finish()
+            } else {
+                insertDataToDatabase()
+                finish()
+            }
+        }
+        builder.setNegativeButton("Não"){dialog, which ->
         }
         builder.show()
     }
