@@ -22,7 +22,7 @@ class ExerciseViewModel(application: Application): AndroidViewModel(application)
         exerciseRepository = ExerciseRepository(exerciseDao)
     }
 
-    fun readAllData(): LiveData<List<Exercise>> = exerciseRepository.readAllData()
+    fun readAllData(training : Int): LiveData<List<Exercise>> = exerciseRepository.readAllData(training)
 
     fun addExercise(exercise: Exercise) {
         viewModelScope.launch(Dispatchers.IO) {

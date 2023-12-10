@@ -23,6 +23,6 @@ interface ExerciseDao {
     @Query("DELETE FROM exercise_table")
     suspend fun deleteExerciseDb()
 
-    @Query("SELECT * FROM exercise_table ORDER BY name ASC")
-    fun readALlData(): LiveData<List<Exercise>>
+    @Query("SELECT * FROM exercise_table WHERE training =:training ORDER BY name ASC")
+    fun readALlData(training : Int): LiveData<List<Exercise>>
 }

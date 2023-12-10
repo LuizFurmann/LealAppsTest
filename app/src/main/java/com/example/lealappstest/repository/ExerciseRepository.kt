@@ -6,7 +6,7 @@ import com.example.lealappstest.model.Exercise
 
 class ExerciseRepository (private val exerciseDao: ExerciseDao){
 
-    fun readAllData(): LiveData<List<Exercise>> = exerciseDao.readALlData()
+    fun readAllData(training : Int): LiveData<List<Exercise>> = exerciseDao.readALlData(training)
 
     suspend fun addExercise(exercise: Exercise){
         exerciseDao.addExercise(exercise)

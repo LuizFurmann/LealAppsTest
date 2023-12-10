@@ -70,6 +70,7 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:lines="1"
+                    android:focusable="false"
                     android:singleLine="true"
                     android:hint="Data"
                     android:textColorHint="@color/black"/>

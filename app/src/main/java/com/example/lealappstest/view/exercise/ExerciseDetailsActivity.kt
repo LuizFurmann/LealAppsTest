@@ -1,25 +1,37 @@
 package com.example.lealappstest.view.exercise
 
+import android.app.Activity
+import android.content.Intent
 import android.content.res.ColorStateList
-import androidx.appcompat.app.AppCompatActivity
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.example.lealappstest.R
 import com.example.lealappstest.databinding.ActivityExerciseDetailsBinding
 import com.example.lealappstest.model.Exercise
+import com.example.lealappstest.model.Training
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import java.io.File
+
 
 class ExerciseDetailsActivity : AppCompatActivity() {
 
-    private lateinit var binding : ActivityExerciseDetailsBinding
+    private lateinit var binding: ActivityExerciseDetailsBinding
     lateinit var exerciseViewModel: ExerciseViewModel
 
+    val REQUEST_IMAGE = 100
+    var profilePicturePath: String? = null
+
     lateinit var exercise: Exercise
+    lateinit var training: Training
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityExerciseDetailsBinding.inflate(layoutInflater)
@@ -27,26 +39,57 @@ class ExerciseDetailsActivity : AppCompatActivity() {
         setContentView(binding.root)
         setupViewModel()
         saveExercise()
+        selectImage()
+
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
     }
 
-
-    fun setupViewModel(){
-        exerciseViewModel = ViewModelProvider(this)[ExerciseViewModel::class.java]
-
-        if(intent.getSerializableExtra("Exercise") != null){
-            exercise = intent.getSerializableExtra("Exercise") as Exercise
-            updateView(exercise)
-            binding.btnSaveExercise.visibility = View.INVISIBLE
-        }else{
-            binding.etName.isEnabled = true
-            binding.etImage.isEnabled = true
-            binding.etDescription.isEnabled = true
+    fun selectImage(){
+        binding.selectedImage.setOnClickListener {
+            imageChooser()
         }
     }
 
-    private fun updateView(exercise: Exercise){
+    fun imageChooser() {
+        val i = Intent()
+        i.type = "image/*"
+        i.action = Intent.ACTION_GET_CONTENT
+
+        startActivityForResult(Intent.createChooser(i, "Select Picture"), REQUEST_IMAGE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+            if (requestCode == REQUEST_IMAGE) {
+                val selectedImageUri = data?.data
+                if (null != selectedImageUri) {
+
+                    val rPermPersist = Intent.FLAG_GRANT_READ_URI_PERMISSION
+                    this.contentResolver.takePersistableUriPermission(data?.data!!, rPermPersist)
+                    binding.selectedImage.setImageURI(data?.data)
+
+                    profilePicturePath = selectedImageUri.toString()
+                }
+            }
+    }
+    fun setupViewModel() {
+        exerciseViewModel = ViewModelProvider(this)[ExerciseViewModel::class.java]
+            if (intent.getSerializableExtra("Exercise") != null) {
+                exercise = intent.getSerializableExtra("Exercise") as Exercise
+                updateView(exercise)
+                setTitle("Exercício ${exercise.name.toString()}")
+                binding.btnSaveExercise.visibility = View.INVISIBLE
+            } else {
+                binding.etName.isEnabled = true
+                binding.etDescription.isEnabled = true
+            }
+    }
+
+    private fun updateView(exercise: Exercise) {
+         var myUri : Uri = Uri.parse(exercise.image);
+
         binding.etName.setText(exercise.name)
-        binding.etImage.setText(exercise.image)
+        binding.selectedImage.setImageURI(myUri)
         binding.etDescription.setText(exercise.observation)
     }
 
@@ -92,39 +135,46 @@ class ExerciseDetailsActivity : AppCompatActivity() {
             }
 
             if (validadeExercise()) {
-                if(intent.getSerializableExtra("Exercise") != null){
+                if (intent.getSerializableExtra("Exercise") != null) {
                     updateExercise()
                     finish()
-                }else{
+                } else {
                     insertDataToDatabase()
                     binding.etName.setText("")
-                    binding.etImage.setText("")
                     binding.etDescription.setText("")
                 }
             }
         }
     }
+
     fun validadeExercise(): Boolean {
-        if(binding.tilName.editText?.text.toString().isEmpty()){
+        if (binding.tilName.editText?.text.toString().isEmpty()) {
             return false
         }
-        if(binding.tilDescription.editText?.text.toString().isEmpty()){
+        if (binding.tilDescription.editText?.text.toString().isEmpty()) {
             return false
         }
         return true
     }
 
     private fun insertDataToDatabase() {
-        val exercise = Exercise(0, binding.etName.text.toString(), binding.etImage.text.toString(), binding.etDescription.text.toString())
-        exerciseViewModel.addExercise(exercise)
-        Toast.makeText(this, "Exercício adicionado", Toast.LENGTH_LONG).show()
+        if (intent.getSerializableExtra("Training") != null) {
+            training = intent.getSerializableExtra("Training") as Training
+            val exercise = Exercise(
+                0, training.name.toString().toInt(), binding.etName.text.toString(),
+                profilePicturePath.toString(), binding.etDescription.text.toString()
+            )
+            exerciseViewModel.addExercise(exercise)
+            Toast.makeText(this, "Exercício adicionado", Toast.LENGTH_LONG).show()
+        }
+
     }
 
     private fun updateExercise(){
         exercise = intent.getSerializableExtra("Exercise") as Exercise
         var id = exercise.id
 
-        val updatedExercise = Exercise(id, binding.etName.text.toString(), binding.etImage.text.toString(), binding.etDescription.text.toString())
+        val updatedExercise = Exercise(id, exercise.training.toString().toInt(), binding.etName.text.toString(), profilePicturePath.toString(), binding.etDescription.text.toString())
         exerciseViewModel.updateExercise(updatedExercise)
         Toast.makeText(this, "Treino editado", Toast.LENGTH_LONG).show()
     }
@@ -133,14 +183,14 @@ class ExerciseDetailsActivity : AppCompatActivity() {
         exercise = intent.getSerializableExtra("Exercise") as Exercise
         var id = exercise.id
 
-        val updatedExercise = Exercise(id, binding.etName.text.toString(), binding.etImage.text.toString(), binding.etDescription.text.toString())
+        val updatedExercise = Exercise(id, exercise.training.toString().toInt(), binding.etName.text.toString(), profilePicturePath.toString(), binding.etDescription.text.toString())
         // Update Current User
         exerciseViewModel.deleteExercise(updatedExercise)
         Toast.makeText(this, "Deletado com sucesso!", Toast.LENGTH_LONG).show()
         finish()
     }
 
-    private fun deleteExerciseConfirmation(){
+    private fun deleteExerciseConfirmation() {
         val builder = MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialog_rounded)
         builder.setMessage("Deseja deletar o exercício?")
         builder.setPositiveButton(getString(R.string.yes)) { dialog, which ->
@@ -151,21 +201,31 @@ class ExerciseDetailsActivity : AppCompatActivity() {
         builder.show()
     }
 
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        if (requestCode == REQUEST_IMAGE && resultCode == Activity.RESULT_OK) {
+//            val imageUri = data?.data
+//            ActivityResultContracts.GetContent()
+//
+//            profilePicturePath = imageUri.toString()
+//            binding.selectedImage.setImageURI(data?.data)
+//        }
+//    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        if(intent.getSerializableExtra("Exercise") != null){
+        if (intent.getSerializableExtra("Exercise") != null) {
             menuInflater.inflate(R.menu.menu_item, menu)
         }
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == R.id.edit){
+        if (item.itemId == R.id.edit) {
             binding.etName.isEnabled = true
-            binding.etImage.isEnabled = true
             binding.etDescription.isEnabled = true
             binding.btnSaveExercise.visibility = View.VISIBLE
             return true
-        }else if(item.itemId == R.id.delete){
+        } else if (item.itemId == R.id.delete) {
             deleteExerciseConfirmation()
             return true
         }

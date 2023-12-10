@@ -13,7 +13,6 @@ import com.example.lealappstest.R
 import com.example.lealappstest.databinding.ActivityExerciseBinding
 import com.example.lealappstest.model.Exercise
 import com.example.lealappstest.model.Training
-import com.example.lealappstest.view.training.TrainingAdapter
 import com.example.lealappstest.view.training.TrainingDetailsActivity
 import com.example.lealappstest.view.training.TrainingViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -33,9 +32,15 @@ class ExerciseActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
+
+        training = intent.getSerializableExtra("Training") as Training
+
+        setTitle("Treino ${training.name.toString()}")
         setupRecyclerView()
         setupViewModel()
         newExercise()
+
+
     }
 
     private fun setupRecyclerView(){
@@ -48,7 +53,7 @@ class ExerciseActivity : AppCompatActivity() {
     private fun setupViewModel(){
         exerciseViewModel = ViewModelProvider(this)[ExerciseViewModel::class.java]
         trainingViewModel = ViewModelProvider(this)[TrainingViewModel::class.java]
-        exerciseViewModel.readAllData().observe(this) {
+        exerciseViewModel.readAllData(training.name.toString().toInt()).observe(this) {
                 exercises -> updateList(exercises)
         }
     }
@@ -69,6 +74,7 @@ class ExerciseActivity : AppCompatActivity() {
     private fun newExercise() {
         binding.fabNewExercise.setOnClickListener {
             Intent(this@ExerciseActivity, ExerciseDetailsActivity::class.java).also{
+                it.putExtra("Training", training)
                 startActivity(it)
             }
         }

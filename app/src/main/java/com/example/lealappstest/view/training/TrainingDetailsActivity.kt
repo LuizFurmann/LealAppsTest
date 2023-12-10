@@ -1,18 +1,17 @@
 package com.example.lealappstest.view.training
 
+import android.app.DatePickerDialog
 import android.content.res.ColorStateList
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.lealappstest.R
 import com.example.lealappstest.databinding.ActivityTrainingDetailsBinding
 import com.example.lealappstest.model.Training
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import java.sql.Timestamp
+import java.util.Calendar
 
 class TrainingDetailsActivity : AppCompatActivity() {
     private lateinit var binding : ActivityTrainingDetailsBinding
@@ -28,6 +27,7 @@ class TrainingDetailsActivity : AppCompatActivity() {
 
         setupViewModel()
         saveExercise()
+        getPickDate()
     }
 
 
@@ -46,7 +46,7 @@ class TrainingDetailsActivity : AppCompatActivity() {
 
     private fun updateView(training: Training){
         binding.etNumber.setText(training.name)
-        binding.etDescription.setText(training.date)
+        binding.etDescription.setText(training.date.toString())
         binding.etDate.setText(training.description)
     }
 
@@ -115,12 +115,15 @@ class TrainingDetailsActivity : AppCompatActivity() {
     }
 
     private fun insertDataToDatabase() {
+//        val timestamp = Timestamp.valueOf(binding.etDate.text.toString())
+
         val training = Training(0, binding.etNumber.text.toString(), binding.etDescription.text.toString(), binding.etDate.text.toString())
         trainingViewModel.addTraining(training)
         Toast.makeText(this, "Exercício adicionado", Toast.LENGTH_LONG).show()
     }
 
     private fun updateExercise(){
+        val timestamp = Timestamp.valueOf(binding.etDate.text.toString())
         training = intent.getSerializableExtra("Training") as Training
         var id = training.id
 
@@ -129,25 +132,25 @@ class TrainingDetailsActivity : AppCompatActivity() {
         Toast.makeText(this, "Treino editado", Toast.LENGTH_LONG).show()
     }
 
-    private fun deleteExercise(){
-        training = intent.getSerializableExtra("Training") as Training
-        var id = training.id
+    private fun getPickDate() {
+        binding.tilDate.editText?.setOnClickListener {
+            val c = Calendar.getInstance()
 
-        val updatedExercise = Training(id, binding.etNumber.text.toString(), binding.etDescription.text.toString(), binding.etDate.text.toString())
-        // Update Current User
-        trainingViewModel.deleteTraining(updatedExercise)
-        Toast.makeText(this, "Deletado com sucesso!", Toast.LENGTH_LONG).show()
-        finish()
-    }
+            val year = c.get(Calendar.YEAR)
+            val month = c.get(Calendar.MONTH)
+            val day = c.get(Calendar.DAY_OF_MONTH)
 
-    private fun deleteExerciseConfirmation(){
-        val builder = MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialog_rounded)
-        builder.setMessage("Deseja deletar o exercício?")
-        builder.setPositiveButton(getString(R.string.yes)) { dialog, which ->
-            deleteExercise()
+            val datePickerDialog = DatePickerDialog(
+                this,
+                { view, year, monthOfYear, dayOfMonth ->
+                    val dat = (dayOfMonth.toString() + "/" + (monthOfYear + 1) + "/" + year)
+                    binding.etDate.setText(dat)
+                },
+                year,
+                month,
+                day
+            )
+            datePickerDialog.show()
         }
-        builder.setNegativeButton(getString(R.string.no)) { dialog, which ->
-        }
-        builder.show()
     }
 }

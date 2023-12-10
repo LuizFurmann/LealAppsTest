@@ -6,11 +6,37 @@
     android:layout_height="match_parent"
     tools:context=".view.training.MainActivity">
 
+    <TextView
+        android:id="@+id/myTrainingTittle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Meus treinos"
+        android:textSize="26sp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/emptyTrainingList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nenhum treino encontrado, adicione para ver aqui!"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:textColor="@color/grey"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvTraining"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="50dp"
+        app:layout_constraintTop_toBottomOf="@+id/myTrainingTittle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
