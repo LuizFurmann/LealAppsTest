@@ -9,6 +9,8 @@ import androidx.core.content.ContextCompat
 import com.example.lealappstest.R
 import com.example.lealappstest.databinding.ActivityLoginBinding
 import com.example.lealappstest.view.training.MainActivity
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
@@ -84,11 +86,19 @@ class LoginActivity : AppCompatActivity() {
                                 finish()
                             }
                         } else {
-                            Toast.makeText(this, ">>>>>>>> DEU ERRADO", Toast.LENGTH_SHORT).show()
+                            loginError()
                         }
                     }
             }
         }
+    }
+
+    fun loginError(){
+        val builder = MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialog_rounded)
+        builder.setMessage("Usuário ou senha inválidos")
+        builder.setPositiveButton(getString(R.string.understand)) { dialog, which ->
+        }
+        builder.show()
     }
 
     private fun loginValidation(): Boolean {

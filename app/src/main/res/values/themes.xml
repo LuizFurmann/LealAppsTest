@@ -10,10 +10,9 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/green</item>
         <item name="colorPrimaryDark">@color/green</item>
-
     </style>
 
-    <style name="Base.Theme.LealAppsTest.NoActionBar">
+    <style name="Theme.LealAppsTest.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
 
@@ -24,11 +23,13 @@
         <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
+    <style name="Theme.LealAppsTest.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.LealAppsTest.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
     <style name="Theme.LealAppsTest" parent="Base.Theme.LealAppsTest" />
 
     <style name="Base.Theme.LealAppsTest.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="Base.Theme.LealAppsTest.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="MaterialAlertDialog_rounded" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">
         <item name="shapeAppearanceOverlay">@style/DialogCorners</item>
