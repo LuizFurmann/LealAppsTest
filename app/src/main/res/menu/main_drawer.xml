@@ -3,14 +3,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <item
-        android:id="@+id/nav_delete_exercise_db"
-        android:icon="@drawable/ic_delete"
-        android:title="Apagar todos os exercícios" />
+    <item android:title="Banco de dados">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_delete_exercise_db"
+                    android:icon="@drawable/ic_delete"
+                    android:title="Apagar todos os exercícios" />
 
-    <item
-        android:id="@+id/nav_delete_training_db"
-        android:icon="@drawable/ic_delete"
-        android:title="Apagar todos os treinos" />
+                <item
+                    android:id="@+id/nav_delete_training_db"
+                    android:icon="@drawable/ic_delete"
+                    android:title="Apagar todos os treinos" />
+            </group>
+        </menu>
+    </item>
 
+    <item android:title="Usuário">
+        <menu>
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_logout"
+                android:title="Sair" />
+        </menu>
+    </item>
 </menu>

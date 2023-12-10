@@ -1,29 +1,26 @@
 package com.example.lealappstest.view.training
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Environment
-import android.provider.Settings
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.lealappstest.R
 import com.example.lealappstest.databinding.ActivityMainBinding
 import com.example.lealappstest.model.Training
+import com.example.lealappstest.view.authentication.LoginActivity
 import com.example.lealappstest.view.exercise.ExerciseViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,12 +29,20 @@ class MainActivity : AppCompatActivity() {
     lateinit var trainingViewModel: TrainingViewModel
     lateinit var exerciseViewModel: ExerciseViewModel
     private val trainingAdapter = TrainingAdapter()
+    lateinit var user : FirebaseUser
+    lateinit var auth : FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityMainBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setTitle("")
+        auth = FirebaseAuth.getInstance()
+        user = auth.currentUser!!
+
+        val headerView = binding.navView.getHeaderView(0)
+        val navUsername = headerView.findViewById<View>(R.id.userEmail) as TextView
+        navUsername.text = user.email.toString()
 
         setupDrawer()
         setupRecyclerView()
@@ -97,6 +102,7 @@ class MainActivity : AppCompatActivity() {
             when(it.itemId){
                 R.id.nav_delete_training_db -> dialogDeleteTrainingDb()
                 R.id.nav_delete_exercise_db -> dialogDeleteExerciseDb()
+                R.id.nav_logout -> logout()
             }
             true
         }
@@ -125,6 +131,14 @@ class MainActivity : AppCompatActivity() {
         builder.setNegativeButton(getString(R.string.no)) { dialog, which ->
         }
         builder.show()
+    }
+
+    fun logout(){
+        FirebaseAuth.getInstance().signOut()
+        Intent(this@MainActivity, LoginActivity::class.java).also{
+            startActivity(it)
+            finish()
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
