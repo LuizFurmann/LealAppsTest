@@ -10,7 +10,7 @@ data class Exercise(
     @PrimaryKey(autoGenerate = true)
     val id : Int,
     val training : Int,
-    val name : String,
+    val name : Int,
     val image: String,
     val observation: String
 ): Serializable

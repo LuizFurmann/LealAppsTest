@@ -29,7 +29,7 @@ class ExerciseAdapter() : RecyclerView.Adapter<ExerciseAdapter.ExerciseViewHolde
 
     override fun onBindViewHolder(holder: ExerciseViewHolder, position: Int) {
         val currentItem = exerciseList[position]
-        holder.exercise.text = currentItem.name
+        holder.exercise.text = currentItem.name.toString()
 
         var myUri : Uri = Uri.parse(currentItem.image);
         holder.imgExercise.setImageURI(myUri)

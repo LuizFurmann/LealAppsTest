@@ -49,9 +49,9 @@ class TrainingDetailsActivity : AppCompatActivity() {
     }
 
     private fun updateView(training: Training) {
-        binding.etName.setText(training.name)
-        binding.etDescription.setText(training.date.toString())
-        binding.etDate.setText(training.description)
+        binding.etName.setText(training.name.toString())
+        binding.etDescription.setText(training.description)
+        binding.etDate.setText(training.date.toString())
     }
 
     private fun saveExercise() {
@@ -114,7 +114,7 @@ class TrainingDetailsActivity : AppCompatActivity() {
     private fun insertDataToDatabase() {
         val training = Training(
             0,
-            binding.etName.text.toString(),
+            binding.etName.text.toString().toInt(),
             binding.etDescription.text.toString(),
             binding.etDate.text.toString()
         )
@@ -142,7 +142,7 @@ class TrainingDetailsActivity : AppCompatActivity() {
 
         val updatedTraining = Training(
             id,
-            binding.etName.text.toString(),
+            binding.etName.text.toString().toInt(),
             binding.etDescription.text.toString(),
             binding.etDate.text.toString()
         )
@@ -158,7 +158,7 @@ class TrainingDetailsActivity : AppCompatActivity() {
             if (trainings.isNotEmpty()) {
                 trainings.size
                 trainings?.forEach lit@{
-                    if (it.name == binding.etName.text.toString()) {
+                    if (it.name == binding.etName.text.toString().toInt()) {
                         exists = true
                         return@lit
                     }

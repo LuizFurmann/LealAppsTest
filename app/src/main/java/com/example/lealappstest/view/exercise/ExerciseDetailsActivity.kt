@@ -88,7 +88,7 @@ class ExerciseDetailsActivity : AppCompatActivity() {
          var myUri : Uri = Uri.parse(exercise.image);
         profilePicturePath = myUri.toString()
 
-        binding.etName.setText(exercise.name)
+        binding.etName.setText(exercise.name.toString())
         binding.selectedImage.setImageURI(myUri)
         binding.etDescription.setText(exercise.observation)
     }
@@ -157,7 +157,7 @@ class ExerciseDetailsActivity : AppCompatActivity() {
         if (intent.getSerializableExtra("Training") != null) {
             training = intent.getSerializableExtra("Training") as Training
             val exercise = Exercise(
-                0, training.name.toString().toInt(), binding.etName.text.toString(),
+                0, training.name.toString().toInt(), binding.etName.text.toString().toInt(),
                 profilePicturePath.toString(), binding.etDescription.text.toString()
             )
             exerciseViewModel.addExercise(exercise)
@@ -169,7 +169,7 @@ class ExerciseDetailsActivity : AppCompatActivity() {
         exercise = intent.getSerializableExtra("Exercise") as Exercise
         var id = exercise.id
 
-        val updatedExercise = Exercise(id, exercise.training.toString().toInt(), binding.etName.text.toString(), profilePicturePath.toString(), binding.etDescription.text.toString())
+        val updatedExercise = Exercise(id, exercise.training.toString().toInt(), binding.etName.text.toString().toInt(), profilePicturePath.toString(), binding.etDescription.text.toString())
         exerciseViewModel.updateExercise(updatedExercise)
         Toast.makeText(this, getString(R.string.exerciseEdited), Toast.LENGTH_LONG).show()
     }
@@ -178,7 +178,7 @@ class ExerciseDetailsActivity : AppCompatActivity() {
         exercise = intent.getSerializableExtra("Exercise") as Exercise
         var id = exercise.id
 
-        val updatedExercise = Exercise(id, exercise.training.toString().toInt(), binding.etName.text.toString(), profilePicturePath.toString(), binding.etDescription.text.toString())
+        val updatedExercise = Exercise(id, exercise.training.toString().toInt(), binding.etName.text.toString().toInt(), profilePicturePath.toString(), binding.etDescription.text.toString())
         // Update Current User
         exerciseViewModel.deleteExercise(updatedExercise)
         Toast.makeText(this, getString(R.string.deletedSuccess), Toast.LENGTH_LONG).show()
@@ -204,7 +204,7 @@ class ExerciseDetailsActivity : AppCompatActivity() {
                 if(trainings.isNotEmpty()){
                     trainings.size
                     trainings?.forEach lit@{
-                        if(it.name == binding.etName.text.toString()){
+                        if(it.name == binding.etName.text.toString().toInt()){
                             exists = true
                             return@lit
                         }
@@ -228,7 +228,7 @@ class ExerciseDetailsActivity : AppCompatActivity() {
                 if(exercises.isNotEmpty()){
                     exercises.size
                     exercises?.forEach lit@{
-                        if(it.name == binding.etName.text.toString()){
+                        if(it.name == binding.etName.text.toString().toInt()){
                             exists = true
                             return@lit
                         }

@@ -8,7 +8,7 @@ import java.io.Serializable
 data class Training(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
-    val name: String,
+    val name: Int,
     val description: String,
     val date: String,
 ): Serializable

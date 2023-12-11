@@ -55,7 +55,7 @@ class ExerciseActivity : AppCompatActivity() {
     private fun updateTrainingDetails() {
         training = intent.getSerializableExtra("Training") as Training
 
-        binding.trainingNameValue.text = training.name
+        binding.trainingNameValue.text = training.name.toString()
         binding.trainingDateValue.text = training.date
         binding.trainingObservationValue.text = training.description
     }

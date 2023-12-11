@@ -25,7 +25,7 @@ class TrainingAdapter() : RecyclerView.Adapter<TrainingAdapter.ExerciseViewHolde
 
     override fun onBindViewHolder(holder: ExerciseViewHolder, position: Int) {
         val currentItem = trainingList[position]
-        holder.exercise.text = currentItem.name
+        holder.exercise.text = currentItem.name.toString()
 
         holder.itemView.setOnClickListener {
             Intent(holder.itemView.context, ExerciseActivity::class.java).also{
