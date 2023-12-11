@@ -8,11 +8,10 @@
     android:background="@drawable/background_login"
     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Entrar"
+        android:text="@string/login"
         android:layout_marginTop="30dp"
         android:textSize="36sp"
         android:textStyle="bold"
@@ -30,13 +29,13 @@
         android:layout_marginTop="100dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:background="@color/white"
         app:cardCornerRadius="8dp"
         app:cardElevation="5dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:background="@drawable/card_gradient"
             android:padding="16dp">
 
             <com.google.android.material.textfield.TextInputLayout
@@ -51,7 +50,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="text"
                     android:drawableRight="@drawable/ic_user"
-                    android:hint="Usuário"
+                    android:hint="@string/user"
                     android:textColorHint="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -67,7 +66,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="text"
                     android:drawableRight="@drawable/ic_password"
-                    android:hint="Senha"
+                    android:hint="@string/password"
                     android:textColorHint="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -81,18 +80,18 @@
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:background="@drawable/button_shape"
-                android:text="Entrar"
+                android:text="@string/enter"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvDontHaveAccount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Não possui cadastro?"
+                android:text="@string/dontHaveAccount"
                 android:textColor="@color/orange"
                 android:layout_marginTop="40dp"
                 android:layout_gravity="end"
-                android:textSize="20dp"/>
+                android:textSize="20sp"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

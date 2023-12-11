@@ -16,5 +16,39 @@
     <string name="title_activity_login">LoginActivity</string>
 
     <string name="trainingDetails">Detalhes do treino</string>
+    <string name="requiredField">Campo obrigatório</string>
+    <string name="invalidUserOrPassword">Usuário ou senha inválidos</string>
+    <string name="registerError">Erro ao cadastrar</string>
+
+    <string name="deletedSuccess">Deletado com sucesso!</string>
+    <string name="deleteExerciseConfirmation">Deseja deletar o exercício?</string>
+    <string name="deleteTrainingConfirmation">Deseja deletar o treino?</string>
+    <string name="trainingAdd">Treino adicionado</string>
+    <string name="exerciseAdd">Exercício adicionado</string>
+    <string name="deleteAllTrainingConfirmation">Deseja deletar todos os treinos?</string>
+    <string name="deleteAllExerciseConfirmation">Deseja deletar todos os exercícios?</string>
+    <string name="deletedTrainings">Treinos deletados</string>
+    <string name="deletedExercises">Exercícios deletados</string>
+    <string name="trainingEdited">Treino editado</string>
+    <string name="exerciseEdited">Exercício editado</string>
+    <string name="exerciseExistsAlert">O exercício já existe, deseja criar mesmo assim?</string>
+    <string name="trainingExistsAlert">O treino já existe</string>
+
+    <string name="date">Data</string>
+    <string name="name">Nome</string>
+    <string name="observation">Observação</string>
+
+    <string name="enter">Entrar</string>
+    <string name="login">Login</string>
+
+    <string name="user">Usuário</string>
+    <string name="password">Senha</string>
+
+    <string name="dontHaveAccount">Não possui cadastro?</string>
+
+    <string name="register">Cadastrar</string>
+    <string name="save">Salvar</string>
+    <string name="description">Descrição</string>
+    <string name="welcome">Seja bem vindo(a)!</string>
 
 </resources>

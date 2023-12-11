@@ -18,12 +18,11 @@ import com.example.lealappstest.view.training.TrainingViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class ExerciseActivity : AppCompatActivity() {
-    private lateinit var binding : ActivityExerciseBinding
 
-    lateinit var exerciseViewModel: ExerciseViewModel
-    lateinit var trainingViewModel: TrainingViewModel
+    private lateinit var binding: ActivityExerciseBinding
+    private lateinit var exerciseViewModel: ExerciseViewModel
+    private lateinit var trainingViewModel: TrainingViewModel
     private val exerciseAdapter = ExerciseAdapter()
-
     lateinit var training: Training
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,30 +37,30 @@ class ExerciseActivity : AppCompatActivity() {
         newExercise()
     }
 
-    private fun setupRecyclerView(){
+    private fun setupRecyclerView() {
         val layoutManager = GridLayoutManager(this, 2)
         binding.rvExercise.layoutManager = layoutManager;
         binding.rvExercise.adapter = exerciseAdapter
         binding.rvExercise.setHasFixedSize(true)
     }
 
-    private fun setupViewModel(){
+    private fun setupViewModel() {
         exerciseViewModel = ViewModelProvider(this)[ExerciseViewModel::class.java]
         trainingViewModel = ViewModelProvider(this)[TrainingViewModel::class.java]
-        exerciseViewModel.readAllData(training.name.toString().toInt()).observe(this) {
-                exercises -> updateList(exercises)
+        exerciseViewModel.readAllData(training.name.toString().toInt()).observe(this) { exercises ->
+            updateList(exercises)
         }
     }
 
-    fun updateTrainingDetails(){
+    private fun updateTrainingDetails() {
         training = intent.getSerializableExtra("Training") as Training
 
-        binding.trainingNumberValue.text = training.name
+        binding.trainingNameValue.text = training.name
         binding.trainingDateValue.text = training.date
         binding.trainingObservationValue.text = training.description
     }
 
-    private fun updateList(exercises: List<Exercise>){
+    private fun updateList(exercises: List<Exercise>) {
         if (exercises.isEmpty()) {
             binding.rvExercise.visibility = View.GONE
             binding.myExercisesTittle.visibility = View.GONE
@@ -76,29 +75,28 @@ class ExerciseActivity : AppCompatActivity() {
 
     private fun newExercise() {
         binding.fabNewExercise.setOnClickListener {
-            Intent(this@ExerciseActivity, ExerciseDetailsActivity::class.java).also{
+            Intent(this@ExerciseActivity, ExerciseDetailsActivity::class.java).also {
                 it.putExtra("Training", training)
                 startActivity(it)
             }
         }
     }
 
-    private fun deleteExercise(){
+    private fun deleteTraining() {
         training = intent.getSerializableExtra("Training") as Training
         var id = training.id
 
-        val updatedExercise = Training(id, training.name, training.description, training.date)
-        // Update Current User
-        trainingViewModel.deleteTraining(updatedExercise)
-        Toast.makeText(this, "Deletado com sucesso!", Toast.LENGTH_LONG).show()
+        val deleteTraining = Training(id, training.name, training.description, training.date)
+        trainingViewModel.deleteTraining(deleteTraining)
+        Toast.makeText(this, getString(R.string.deletedSuccess), Toast.LENGTH_LONG).show()
         finish()
     }
 
-    private fun deleteExerciseConfirmation(){
+    private fun deleteTrainingConfirmation() {
         val builder = MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialog_rounded)
-        builder.setMessage("Deseja deletar o exercício?")
+        builder.setMessage(getString(R.string.deleteTrainingConfirmation))
         builder.setPositiveButton(getString(R.string.yes)) { dialog, which ->
-            deleteExercise()
+            deleteTraining()
         }
         builder.setNegativeButton(getString(R.string.no)) { dialog, which ->
         }
@@ -106,7 +104,7 @@ class ExerciseActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        if(intent.getSerializableExtra("Training") != null){
+        if (intent.getSerializableExtra("Training") != null) {
             menuInflater.inflate(R.menu.menu_item, menu)
         }
         return true
@@ -114,15 +112,15 @@ class ExerciseActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         training = intent.getSerializableExtra("Training") as Training
-        if(item.itemId == R.id.edit){
-            Intent(this@ExerciseActivity, TrainingDetailsActivity::class.java).also{
+        if (item.itemId == R.id.edit) {
+            Intent(this@ExerciseActivity, TrainingDetailsActivity::class.java).also {
                 it.putExtra("Training", training)
                 startActivity(it)
                 finish()
             }
             return true
-        }else if(item.itemId == R.id.delete){
-            deleteExerciseConfirmation()
+        } else if (item.itemId == R.id.delete) {
+            deleteTrainingConfirmation()
             return true
         }
         return super.onOptionsItemSelected(item)

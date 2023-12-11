@@ -11,7 +11,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cadastrar"
+        android:text="@string/register"
         android:layout_marginTop="30dp"
         android:textSize="36sp"
         android:textStyle="bold"
@@ -29,13 +29,13 @@
         android:layout_marginTop="100dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:background="@color/white"
         app:cardCornerRadius="8dp"
         app:cardElevation="5dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:background="@drawable/card_gradient"
             android:padding="16dp">
 
             <com.google.android.material.textfield.TextInputLayout
@@ -50,7 +50,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="text"
                     android:drawableRight="@drawable/ic_user"
-                    android:hint="Usuário"
+                    android:hint="@string/user"
                     android:textColorHint="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -66,7 +66,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="text"
                     android:drawableRight="@drawable/ic_password"
-                    android:hint="Senha"
+                    android:hint="@string/password"
                     android:textColorHint="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -80,10 +80,8 @@
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:background="@drawable/button_shape"
-                android:text="Salvar"
+                android:text="@string/save"
                 android:textStyle="bold" />
-
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

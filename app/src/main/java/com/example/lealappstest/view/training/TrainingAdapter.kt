@@ -19,7 +19,6 @@ class TrainingAdapter() : RecyclerView.Adapter<TrainingAdapter.ExerciseViewHolde
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseViewHolder {
-
         val itemBinding = RowTrainingBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ExerciseViewHolder(itemBinding)
     }
@@ -27,7 +26,6 @@ class TrainingAdapter() : RecyclerView.Adapter<TrainingAdapter.ExerciseViewHolde
     override fun onBindViewHolder(holder: ExerciseViewHolder, position: Int) {
         val currentItem = trainingList[position]
         holder.exercise.text = currentItem.name
-
 
         holder.itemView.setOnClickListener {
             Intent(holder.itemView.context, ExerciseActivity::class.java).also{

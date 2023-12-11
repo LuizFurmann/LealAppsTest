@@ -26,19 +26,19 @@
             android:padding="16dp">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilNumber"
+                android:id="@+id/tilName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
                 <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/etNumber"
+                    android:id="@+id/etName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:lines="1"
                     android:singleLine="true"
-                    android:hint="Número"
+                    android:hint="@string/name"
                     android:textColorHint="@color/black"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -55,7 +55,7 @@
                     android:maxLines="1"
                     android:lines="1"
                     android:singleLine="true"
-                    android:hint="Descrição"
+                    android:hint="@string/description"
                     android:textColorHint="@color/black"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -73,7 +73,7 @@
                     android:lines="1"
                     android:focusable="false"
                     android:singleLine="true"
-                    android:hint="Data"
+                    android:hint="@string/date"
                     android:textColorHint="@color/black"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -87,7 +87,7 @@
                 android:textAllCaps="false"
                 android:textSize="16sp"
                 android:background="@drawable/button_shape"
-                android:text="Salvar"
+                android:text="@string/save"
                 android:textStyle="bold"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

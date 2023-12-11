@@ -23,11 +23,10 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         auth = FirebaseAuth.getInstance()
-
         saveUser()
     }
 
-    fun saveUser() {
+    private fun saveUser() {
         binding.btnSaveUser.setOnClickListener {
 
             val context = this
@@ -46,7 +45,7 @@ class RegisterActivity : AppCompatActivity() {
             )
 
             if (binding.tilUserEmail.editText?.text.toString().isNullOrEmpty()) {
-                binding.tilUserEmail.editText?.error = "Campo obrigatório"
+                binding.tilUserEmail.editText?.error = getString(R.string.requiredField)
                 binding.tilUserEmail.setBoxStrokeColorStateList(colorState)
                 binding.tilUserEmail.hintTextColor =
                     ColorStateList.valueOf(ContextCompat.getColor(this, R.color.red))
@@ -58,7 +57,7 @@ class RegisterActivity : AppCompatActivity() {
             }
 
             if (binding.tilPassword.editText?.text.toString().isNullOrEmpty()) {
-                binding.tilPassword.editText?.error = "Campo obrigatório"
+                binding.tilPassword.editText?.error = getString(R.string.requiredField)
                 binding.tilPassword.setBoxStrokeColorStateList(colorState)
                 binding.tilPassword.hintTextColor =
                     ColorStateList.valueOf(ContextCompat.getColor(this, R.color.red))
@@ -70,7 +69,6 @@ class RegisterActivity : AppCompatActivity() {
             }
 
             if (userValidation()) {
-
                 auth.createUserWithEmailAndPassword(
                     binding.etUserEmail.text.toString(),
                     binding.etPassword.text.toString()
@@ -86,9 +84,9 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    fun registerError() {
+    private fun registerError() {
         val builder = MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialog_rounded)
-        builder.setMessage("Erro ao cadastrar")
+        builder.setMessage(getString(R.string.registerError))
         builder.setPositiveButton(getString(R.string.understand)) { dialog, which ->
         }
         builder.show()

@@ -15,7 +15,7 @@ import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
     lateinit var binding: ActivityLoginBinding
-    private lateinit var auth : FirebaseAuth
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -35,7 +35,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    fun loginAction() {
+    private fun loginAction() {
         binding.btnLogin.setOnClickListener {
 
             val context = this
@@ -54,7 +54,7 @@ class LoginActivity : AppCompatActivity() {
             )
 
             if (binding.tilUserEmail.editText?.text.toString().isNullOrEmpty()) {
-                binding.tilUserEmail.editText?.error = "Campo obrigatório"
+                binding.tilUserEmail.editText?.error = getString(R.string.requiredField)
                 binding.tilUserEmail.setBoxStrokeColorStateList(colorState)
                 binding.tilUserEmail.hintTextColor =
                     ColorStateList.valueOf(ContextCompat.getColor(this, R.color.red))
@@ -66,7 +66,7 @@ class LoginActivity : AppCompatActivity() {
             }
 
             if (binding.tilPassword.editText?.text.toString().isNullOrEmpty()) {
-                binding.tilPassword.editText?.error = "Campo obrigatório"
+                binding.tilPassword.editText?.error = getString(R.string.requiredField)
                 binding.tilPassword.setBoxStrokeColorStateList(colorState)
                 binding.tilPassword.hintTextColor =
                     ColorStateList.valueOf(ContextCompat.getColor(this, R.color.red))
@@ -78,10 +78,13 @@ class LoginActivity : AppCompatActivity() {
             }
 
             if (loginValidation()) {
-                auth.signInWithEmailAndPassword(binding.etUserEmail.text.toString(), binding.etPassword.text.toString())
+                auth.signInWithEmailAndPassword(
+                    binding.etUserEmail.text.toString(),
+                    binding.etPassword.text.toString()
+                )
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
-                            Intent(this@LoginActivity, MainActivity::class.java).also{
+                            Intent(this@LoginActivity, MainActivity::class.java).also {
                                 startActivity(it)
                                 finish()
                             }
@@ -93,9 +96,9 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    fun loginError(){
+    private fun loginError() {
         val builder = MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialog_rounded)
-        builder.setMessage("Usuário ou senha inválidos")
+        builder.setMessage(getString(R.string.invalidUserOrPassword))
         builder.setPositiveButton(getString(R.string.understand)) { dialog, which ->
         }
         builder.show()

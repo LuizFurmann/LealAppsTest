@@ -34,7 +34,6 @@ class ExerciseAdapter() : RecyclerView.Adapter<ExerciseAdapter.ExerciseViewHolde
         var myUri : Uri = Uri.parse(currentItem.image);
         holder.imgExercise.setImageURI(myUri)
 
-
         holder.itemView.setOnClickListener {
             Intent(holder.itemView.context, ExerciseDetailsActivity::class.java).also{
                 it.putExtra("Exercise", currentItem)

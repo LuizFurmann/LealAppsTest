@@ -5,11 +5,9 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.lealappstest.data.exercise.ExerciseDatabase
-import com.example.lealappstest.data.training.TrainingDatabase
 import com.example.lealappstest.model.Exercise
 import com.example.lealappstest.model.Training
 import com.example.lealappstest.repository.ExerciseRepository
-import com.example.lealappstest.repository.TrainingRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

@@ -24,13 +24,13 @@ import com.google.firebase.auth.FirebaseUser
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var toggle: ActionBarDrawerToggle
-    private lateinit var binding : ActivityMainBinding
-    lateinit var trainingViewModel: TrainingViewModel
-    lateinit var exerciseViewModel: ExerciseViewModel
+    private lateinit var toggle: ActionBarDrawerToggle
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var trainingViewModel: TrainingViewModel
+    private lateinit var exerciseViewModel: ExerciseViewModel
     private val trainingAdapter = TrainingAdapter()
-    lateinit var user : FirebaseUser
-    lateinit var auth : FirebaseAuth
+    private lateinit var user: FirebaseUser
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -40,33 +40,35 @@ class MainActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         user = auth.currentUser!!
 
-        val headerView = binding.navView.getHeaderView(0)
-        val navUsername = headerView.findViewById<View>(R.id.userEmail) as TextView
-        navUsername.text = user.email.toString()
-
+        setupNavHeader()
         setupDrawer()
         setupRecyclerView()
         setupViewModel()
         newExercise()
-//        checkPermissionsAndOpenFilePicker()
     }
 
-    private fun setupRecyclerView(){
+    private fun setupNavHeader() {
+        val headerView = binding.navView.getHeaderView(0)
+        val navUsername = headerView.findViewById<View>(R.id.userEmail) as TextView
+        navUsername.text = user.email.toString()
+    }
+
+    private fun setupRecyclerView() {
         val layoutManager = GridLayoutManager(this, 2)
         binding.rvTraining.layoutManager = layoutManager;
         binding.rvTraining.adapter = trainingAdapter
         binding.rvTraining.setHasFixedSize(true)
     }
 
-    private fun setupViewModel(){
+    private fun setupViewModel() {
         trainingViewModel = ViewModelProvider(this)[TrainingViewModel::class.java]
         exerciseViewModel = ViewModelProvider(this)[ExerciseViewModel::class.java]
-        trainingViewModel.readAllData().observe(this) {
-                trainings -> updateList(trainings)
+        trainingViewModel.readAllData().observe(this) { trainings ->
+            updateList(trainings)
         }
     }
 
-    private fun updateList(trainings: List<Training>){
+    private fun updateList(trainings: List<Training>) {
         if (trainings.isEmpty()) {
             binding.rvTraining.visibility = View.GONE
             binding.myTrainingTittle.visibility = View.GONE
@@ -82,24 +84,24 @@ class MainActivity : AppCompatActivity() {
     private fun newExercise() {
         binding.fabNewTraining.setOnClickListener {
 
-            Intent(this@MainActivity, TrainingDetailsActivity::class.java).also{
+            Intent(this@MainActivity, TrainingDetailsActivity::class.java).also {
                 startActivity(it)
             }
         }
     }
 
-    private fun setupDrawer(){
-        val draweLayout : DrawerLayout = binding.drawerLayout
-        val navView : NavigationView = binding.navView
+    private fun setupDrawer() {
+        val draweLayout: DrawerLayout = binding.drawerLayout
+        val navView: NavigationView = binding.navView
 
-        toggle = ActionBarDrawerToggle(this,draweLayout, R.string.open, R.string.close)
+        toggle = ActionBarDrawerToggle(this, draweLayout, R.string.open, R.string.close)
         draweLayout.addDrawerListener(toggle)
         toggle.syncState()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         binding.navView.setNavigationItemSelectedListener {
-            when(it.itemId){
+            when (it.itemId) {
                 R.id.nav_delete_training_db -> dialogDeleteTrainingDb()
                 R.id.nav_delete_exercise_db -> dialogDeleteExerciseDb()
                 R.id.nav_logout -> logout()
@@ -108,24 +110,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun dialogDeleteTrainingDb(){
+    private fun dialogDeleteTrainingDb() {
         val builder = MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialog_rounded)
-        builder.setMessage("Deseja deletar todos os treinos?")
+        builder.setMessage(getString(R.string.deleteAllTrainingConfirmation))
         builder.setPositiveButton(getString(R.string.yes)) { dialog, which ->
             trainingViewModel.deleteExerciseDb()
-            Snackbar.make(binding.root, "Treinos deletados", Snackbar.LENGTH_LONG).show()
-        }
-        builder.setNegativeButton(getString(R.string.no)) { dialog, which ->
-        }
-        builder.show()
-    }
-
-    fun dialogDeleteExerciseDb(){
-        val builder = MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialog_rounded)
-        builder.setMessage("Deseja deletar todos os exercícios?")
-        builder.setPositiveButton(getString(R.string.yes)) { dialog, which ->
-            exerciseViewModel.deleteExerciseDb()
-            Snackbar.make(binding.root, "Exercícios deletados", Snackbar.LENGTH_LONG)
+            Snackbar.make(binding.root, getString(R.string.deletedTrainings), Snackbar.LENGTH_LONG)
                 .show()
         }
         builder.setNegativeButton(getString(R.string.no)) { dialog, which ->
@@ -133,9 +123,22 @@ class MainActivity : AppCompatActivity() {
         builder.show()
     }
 
-    fun logout(){
+    private fun dialogDeleteExerciseDb() {
+        val builder = MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialog_rounded)
+        builder.setMessage(getString(R.string.deleteAllExerciseConfirmation))
+        builder.setPositiveButton(getString(R.string.yes)) { dialog, which ->
+            exerciseViewModel.deleteExerciseDb()
+            Snackbar.make(binding.root, getString(R.string.deletedExercises), Snackbar.LENGTH_LONG)
+                .show()
+        }
+        builder.setNegativeButton(getString(R.string.no)) { dialog, which ->
+        }
+        builder.show()
+    }
+
+    private fun logout() {
         FirebaseAuth.getInstance().signOut()
-        Intent(this@MainActivity, LoginActivity::class.java).also{
+        Intent(this@MainActivity, LoginActivity::class.java).also {
             startActivity(it)
             finish()
         }

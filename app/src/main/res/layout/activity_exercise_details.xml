@@ -55,7 +55,7 @@
                     android:lines="1"
                     android:singleLine="true"
                     android:enabled="false"
-                    android:hint="Nome"
+                    android:hint="@string/name"
                     android:textColorHint="@color/black"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -73,7 +73,7 @@
                     android:lines="1"
                     android:enabled="false"
                     android:singleLine="true"
-                    android:hint="Observação"
+                    android:hint="@string/observation"
                     android:textColorHint="@color/black"/>
             </com.google.android.material.textfield.TextInputLayout>
 

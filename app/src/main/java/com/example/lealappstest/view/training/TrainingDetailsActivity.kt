@@ -19,8 +19,8 @@ import java.util.Calendar
 class TrainingDetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTrainingDetailsBinding
 
-    lateinit var trainingViewModel: TrainingViewModel
-    lateinit var exerciseViewModel: ExerciseViewModel
+    private lateinit var trainingViewModel: TrainingViewModel
+    private lateinit var exerciseViewModel: ExerciseViewModel
 
     lateinit var training: Training
 
@@ -34,7 +34,6 @@ class TrainingDetailsActivity : AppCompatActivity() {
         getPickDate()
     }
 
-
     fun setupViewModel() {
         trainingViewModel = ViewModelProvider(this)[TrainingViewModel::class.java]
         exerciseViewModel = ViewModelProvider(this)[ExerciseViewModel::class.java]
@@ -43,19 +42,19 @@ class TrainingDetailsActivity : AppCompatActivity() {
             training = intent.getSerializableExtra("Training") as Training
             updateView(training)
         } else {
-            binding.etNumber.isEnabled = true
+            binding.etName.isEnabled = true
             binding.etDescription.isEnabled = true
             binding.etDate.isEnabled = true
         }
     }
 
     private fun updateView(training: Training) {
-        binding.etNumber.setText(training.name)
+        binding.etName.setText(training.name)
         binding.etDescription.setText(training.date.toString())
         binding.etDate.setText(training.description)
     }
 
-    fun saveExercise() {
+    private fun saveExercise() {
         binding.btnSaveTraining.setOnClickListener {
             val context = this
             val colorState = ColorStateList(
@@ -72,20 +71,20 @@ class TrainingDetailsActivity : AppCompatActivity() {
                 )
             )
 
-            if (binding.tilNumber.editText?.text.toString().isNullOrEmpty()) {
-                binding.tilNumber.editText?.error = "Campo obrigatório"
-                binding.tilNumber.setBoxStrokeColorStateList(colorState)
-                binding.tilNumber.hintTextColor =
+            if (binding.tilName.editText?.text.toString().isNullOrEmpty()) {
+                binding.tilName.editText?.error = getString(R.string.requiredField)
+                binding.tilName.setBoxStrokeColorStateList(colorState)
+                binding.tilName.hintTextColor =
                     ColorStateList.valueOf(ContextCompat.getColor(this, R.color.red))
             } else {
-                binding.tilNumber.editText?.error = null
-                binding.tilNumber.setBoxStrokeColorStateList(colorStateValid)
-                binding.tilNumber.hintTextColor =
+                binding.tilName.editText?.error = null
+                binding.tilName.setBoxStrokeColorStateList(colorStateValid)
+                binding.tilName.hintTextColor =
                     ColorStateList.valueOf(ContextCompat.getColor(this, R.color.grey))
             }
 
             if (binding.tilDescription.editText?.text.toString().isNullOrEmpty()) {
-                binding.tilDescription.editText?.error = "Campo obrigatório"
+                binding.tilDescription.editText?.error = getString(R.string.requiredField)
                 binding.tilDescription.setBoxStrokeColorStateList(colorState)
                 binding.tilDescription.hintTextColor =
                     ColorStateList.valueOf(ContextCompat.getColor(this, R.color.red))
@@ -96,14 +95,14 @@ class TrainingDetailsActivity : AppCompatActivity() {
                     ColorStateList.valueOf(ContextCompat.getColor(this, R.color.grey))
             }
 
-            if (validadeExercise()) {
+            if (validateExercise()) {
                 checkTrainingExists()
             }
         }
     }
 
-    fun validadeExercise(): Boolean {
-        if (binding.tilNumber.editText?.text.toString().isEmpty()) {
+    private fun validateExercise(): Boolean {
+        if (binding.tilName.editText?.text.toString().isEmpty()) {
             return false
         }
         if (binding.tilDescription.editText?.text.toString().isEmpty()) {
@@ -113,20 +112,17 @@ class TrainingDetailsActivity : AppCompatActivity() {
     }
 
     private fun insertDataToDatabase() {
-//        val timestamp = Timestamp.valueOf(binding.etDate.text.toString())
-
         val training = Training(
             0,
-            binding.etNumber.text.toString(),
+            binding.etName.text.toString(),
             binding.etDescription.text.toString(),
             binding.etDate.text.toString()
         )
         trainingViewModel.addTraining(training)
-        Toast.makeText(this, "Exercício adicionado", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, getString(R.string.trainingAdd), Toast.LENGTH_LONG).show()
     }
 
     private fun updateTraining() {
-//        val timestamp = Timestamp.valueOf(binding.etDate.text.toString())
         training = intent.getSerializableExtra("Training") as Training
 
         var id = training.id
@@ -135,7 +131,7 @@ class TrainingDetailsActivity : AppCompatActivity() {
             exercises?.forEach {
                 val updatedExercise = Exercise(
                     it.id,
-                    binding.etNumber.text.toString().toInt(),
+                    binding.etName.text.toString().toInt(),
                     it.name,
                     it.image,
                     it.observation
@@ -146,32 +142,32 @@ class TrainingDetailsActivity : AppCompatActivity() {
 
         val updatedTraining = Training(
             id,
-            binding.etNumber.text.toString(),
+            binding.etName.text.toString(),
             binding.etDescription.text.toString(),
             binding.etDate.text.toString()
         )
         trainingViewModel.updateTraining(updatedTraining)
         finish()
 
-        Toast.makeText(this, "Treino editado", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, getString(R.string.trainingEdited), Toast.LENGTH_LONG).show()
     }
 
-    fun checkTrainingExists(){
+    private fun checkTrainingExists() {
         var exists = false
         trainingViewModel.readAllData().observe(this) { trainings ->
-            if(trainings.isNotEmpty()){
+            if (trainings.isNotEmpty()) {
                 trainings.size
                 trainings?.forEach lit@{
-                    if(it.name == binding.etNumber.text.toString()){
+                    if (it.name == binding.etName.text.toString()) {
                         exists = true
                         return@lit
                     }
                 }
             }
 
-            if(exists){
+            if (exists) {
                 trainingExists()
-            }else{
+            } else {
                 if (intent.getSerializableExtra("Training") != null) {
                     updateTraining()
                     finish()
@@ -185,8 +181,8 @@ class TrainingDetailsActivity : AppCompatActivity() {
 
     private fun trainingExists() {
         val builder = MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialog_rounded)
-        builder.setMessage("O treino já existe")
-        builder.setPositiveButton("Entendi") { dialog, which ->
+        builder.setMessage(getString(R.string.trainingExistsAlert))
+        builder.setPositiveButton(getString(R.string.understand)) { dialog, which ->
         }
         builder.show()
     }
@@ -194,7 +190,6 @@ class TrainingDetailsActivity : AppCompatActivity() {
     private fun getPickDate() {
         binding.tilDate.editText?.setOnClickListener {
             val c = Calendar.getInstance()
-
             val year = c.get(Calendar.YEAR)
             val month = c.get(Calendar.MONTH)
             val day = c.get(Calendar.DAY_OF_MONTH)
