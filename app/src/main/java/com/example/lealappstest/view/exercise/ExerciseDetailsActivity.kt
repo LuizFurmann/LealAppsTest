@@ -52,7 +52,6 @@ class ExerciseDetailsActivity : AppCompatActivity() {
         val i = Intent()
         i.type = "image/*"
         i.action = Intent.ACTION_OPEN_DOCUMENT
-
         startActivityForResult(Intent.createChooser(i, getString(R.string.selectImage)), REQUEST_IMAGE)
     }
 
@@ -65,13 +64,13 @@ class ExerciseDetailsActivity : AppCompatActivity() {
                     val rPermPersist = Intent.FLAG_GRANT_READ_URI_PERMISSION
                     this.contentResolver.takePersistableUriPermission(data?.data!!, rPermPersist)
                     binding.selectedImage.setImageURI(data?.data)
-
                     profilePicturePath = selectedImageUri.toString()
                 }
             }
     }
     private fun setupViewModel() {
         exerciseViewModel = ViewModelProvider(this)[ExerciseViewModel::class.java]
+
             if (intent.getSerializableExtra("Exercise") != null) {
                 exercise = intent.getSerializableExtra("Exercise") as Exercise
                 updateView(exercise)
