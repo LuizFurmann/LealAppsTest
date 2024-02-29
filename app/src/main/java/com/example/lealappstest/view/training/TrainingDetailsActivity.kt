@@ -32,6 +32,7 @@ class TrainingDetailsActivity : AppCompatActivity() {
         setupViewModel()
         saveExercise()
         getPickDate()
+        title = ""
     }
 
     fun setupViewModel() {

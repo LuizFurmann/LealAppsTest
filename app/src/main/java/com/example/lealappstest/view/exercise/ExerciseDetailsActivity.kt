@@ -40,6 +40,7 @@ class ExerciseDetailsActivity : AppCompatActivity() {
         setupViewModel()
         saveExercise()
         selectImage()
+        title = ""
     }
 
     private fun selectImage(){

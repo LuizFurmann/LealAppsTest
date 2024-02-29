@@ -9,7 +9,7 @@
         android:id="@+id/imgLogo"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:src="@drawable/logo"
+        android:src="@drawable/android"
         android:layout_marginStart="10dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
